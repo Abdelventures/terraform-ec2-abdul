@@ -1,1 +1,2 @@
-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
+
+Invoke-WebRequest -Uri "https://releases.jfrog.io/artifactory/jfrog-cli/v2-jf/jfrog-cli-windows-amd64/jfrog.exe" -OutFile "jfrog.exe"
