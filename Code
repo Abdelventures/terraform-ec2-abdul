@@ -1,3 +1,29 @@
-Code Sample here!
----------------------------
-https://www.youtube.com/watch?v=q-svwod6Hi4
+if (1) {
+    if (!$creds) { $creds = Get-Credential }
+
+    $ProgressPreference = 'SilentlyContinue'  # Without this, it will transfer very slow
+    $ErrorActionPreference = 'Stop'
+
+    # JFrog target directory
+    $dir = 'https://artifactory.mtb.com/artifactory/dpc-generic/systems/lcr'
+
+    # Specify the file to upload and the output file name
+    $files = @(
+        @{ Local = 'PS105.zip'; Remote = 'example-PS105.zip' }
+    )
+
+    foreach ($filePair in $files) {
+        $localFile = $filePair.Local
+        $remoteFile = $filePair.Remote
+
+        if (Test-Path $localFile) {
+            $uri = "{0}/{1}" -f $dir, $remoteFile
+            Write-Host ("Uploading file '{0}' as '{1}' to URI '{2}'" -f $localFile, $remoteFile, $uri)
+
+            $results = Invoke-WebRequest -Credential $creds -Method Put -Uri $uri -InFile $localFile
+            $results.RawContent
+        } else {
+            throw ("File '{0}' does not exist." -f $localFile)
+        }
+    }
+}
