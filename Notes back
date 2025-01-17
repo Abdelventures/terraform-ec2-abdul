@@ -1,2 +1,25 @@
+if (!(Test-Path $creds)) {
+    $creds = Get-Credential
+}
 
-Invoke-WebRequest -Uri "https://releases.jfrog.io/artifactory/jfrog-cli/v2-jf/jfrog-cli-windows-amd64/jfrog.exe" -OutFile "jfrog.exe"
+$ProgressPreference = 'SilentlyContinue'  # Without this, it will transfer very slow
+$ErrorActionPreference = 'Stop'
+
+# JFrog target directory
+$dir = 'https://artifactory.mtb.com/artifactory/dpc-generic/systems/dotnet-core'
+
+# Local file to upload
+$localFile = 'PS105'
+
+# Destination filename in JFrog
+$remoteFile = 'example-PS105'
+
+if (Test-Path $localFile) {
+    $uri = "$dir/$remoteFile"
+    Write-Host ("Uploading file '{0}' as '{1}' to URI '{2}'" -f $localFile, $remoteFile, $uri)
+    
+    $results = Invoke-WebRequest -Credential $creds -Method Put -Uri $uri -InFile $localFile
+    Write-Host $results.RawContent
+} else {
+    throw ("File '{0}' does not exist." -f $localFile)
+}
