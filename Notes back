@@ -1,25 +1,16 @@
-if (!(Test-Path $creds)) {
-    $creds = Get-Credential
-}
+It sounds like a productive discussion covering database architecture, data migration, and responsibilities for setup. A few key takeaways:
+	1.	Database Architecture
+	•	The Workday-related database in Colo is separate from the main Workday database in LS1, but data will be transferred using SSIS packages.
+	•	The System Access Tracker and Workday app database will reside on the same database server but remain separate databases.
+	•	There is no need for an active-active database setup, and DC-16 is currently considered the primary, with DC-21 as DR.
+	•	Disaster recovery includes three locations, including CS3 as a secondary DR option.
+	2.	Database & Server Setup Responsibility
+	•	The application team is expected to set up the databases, but guidance and request assistance from the database engineering team will be needed.
+	•	There’s an effort to centralize documentation on database processes for better visibility and support.
+	•	Stacy’s team is involved in setting up the servers and managing the database migration from legacy to Colo.
+	3.	Next Steps
+	•	Finalization and approval of the architecture by network and internal teams.
+	•	Once approved, a detailed design review will be shared to ensure alignment before implementation.
+	•	Requests for database setup and migration will be coordinated with the database team.
 
-$ProgressPreference = 'SilentlyContinue'  # Without this, it will transfer very slow
-$ErrorActionPreference = 'Stop'
-
-# JFrog target directory
-$dir = 'https://artifactory.mtb.com/artifactory/dpc-generic/systems/dotnet-core'
-
-# Local file to upload
-$localFile = 'PS105'
-
-# Destination filename in JFrog
-$remoteFile = 'example-PS105'
-
-if (Test-Path $localFile) {
-    $uri = "$dir/$remoteFile"
-    Write-Host ("Uploading file '{0}' as '{1}' to URI '{2}'" -f $localFile, $remoteFile, $uri)
-    
-    $results = Invoke-WebRequest -Credential $creds -Method Put -Uri $uri -InFile $localFile
-    Write-Host $results.RawContent
-} else {
-    throw ("File '{0}' does not exist." -f $localFile)
-}
+Let me know if you need anything documented further or if there are any points you’d like to expand on.
