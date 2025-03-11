@@ -1,231 +1,30 @@
-HTTP Status 500 – Internal Server Error
-Type Exception Report
+It sounds like the plan is shifting a bit, with the immediate focus on finalizing the current production deployment while preparing for the transition to the new app code. Here are the key takeaways from this discussion:
+	1.	Prod Deployment Status:
+	•	The application is deployed in Prod and is currently being tested.
+	•	The load balancer setup is pending.
+	•	DR setup needs to be reviewed.
+	•	Once validated, the app team will take ownership.
+	2.	Next Steps for the New App Code:
+	•	A new app code has been created, but various dependencies need to be requested, including:
+	•	Veracode and SonarQube projects
+	•	Artifact repositories
+	•	AD groups
+	•	Pipeline setup
+	•	Deployment will start in Dev first, then progress to Cert and Prod.
+	•	Security and architecture reviews are pending and must be completed.
+	3.	Cert Environment Issues:
+	•	Backend memory issues need to be resolved.
+	•	Some challenges with Azure cert and prod environments are being investigated.
+	4.	Tracking and Coordination:
+	•	Once the app team provides detailed requirements, work items will be created.
+	•	Efforts for switching to the new app code will be estimated and planned accordingly.
+	•	Satish has handed off the completed Prod setup to the app team.
 
-Message Servlet.init() for servlet [com.wolterskluwer.auth.keycloak.EmbeddedKeycloakApplication] threw exception
+Immediate Actions:
+	•	Cert Backend Fixes: Investigate and resolve memory issues.
+	•	Load Balancer Setup: Confirm and complete for prod.
+	•	New App Code Prep: Gather and request necessary components.
+	•	Security & Architecture Reviews: Initiate formal reviews.
+	•	Tracking Work Items: Create stories for completed prod work.
 
-Description The server encountered an unexpected condition that prevented it from fulfilling the request.
-
-Exception
-
-jakarta.servlet.ServletException: Servlet.init() for servlet [com.wolterskluwer.auth.keycloak.EmbeddedKeycloakApplication] threw exception
-	org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
-	org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
-	org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:663)
-	org.apache.catalina.valves.rewrite.RewriteValve.invoke(RewriteValve.java:543)
-	org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
-	org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
-	org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
-	org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:904)
-	org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
-	org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
-	org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
-	org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
-	org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
-	java.base/java.lang.Thread.run(Thread.java:840)
-Root Cause
-
-java.lang.RuntimeException: RESTEASY003325: Failed to construct public com.wolterskluwer.auth.keycloak.EmbeddedKeycloakApplication()
-	org.jboss.resteasy.core.ConstructorInjectorImpl.constructOutsideRequest(ConstructorInjectorImpl.java:222)
-	org.jboss.resteasy.core.ConstructorInjectorImpl.construct(ConstructorInjectorImpl.java:188)
-	org.jboss.resteasy.core.providerfactory.Utils.createProviderInstance(Utils.java:97)
-	org.jboss.resteasy.core.providerfactory.ResteasyProviderFactoryImpl.createProviderInstance(ResteasyProviderFactoryImpl.java:1301)
-	org.jboss.resteasy.core.ResteasyDeploymentImpl.createApplication(ResteasyDeploymentImpl.java:396)
-	org.jboss.resteasy.plugins.server.servlet.ServletContainerDispatcher.init(ServletContainerDispatcher.java:108)
-	org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher.init(HttpServletDispatcher.java:39)
-	org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
-	org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
-	org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:663)
-	org.apache.catalina.valves.rewrite.RewriteValve.invoke(RewriteValve.java:543)
-	org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
-	org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
-	org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
-	org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:904)
-	org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
-	org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
-	org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
-	org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
-	org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
-	java.base/java.lang.Thread.run(Thread.java:840)
-Root Cause
-
-com.wolterskluwer.auth.provider.SimplePlatformProvider$SimplePlatformRuntimeException: org.infinispan.manager.EmbeddedCacheManagerStartupException: ISPN000034: The 'jboss.datagrid-infinispan' JMX domain is already in use.
-	com.wolterskluwer.auth.provider.SimplePlatformProvider.exit(SimplePlatformProvider.java:39)
-	org.keycloak.services.resources.KeycloakApplication.<init>(KeycloakApplication.java:84)
-	com.wolterskluwer.auth.keycloak.EmbeddedKeycloakApplication.<init>(EmbeddedKeycloakApplication.java:56)
-	jdk.internal.reflect.GeneratedConstructorAccessor588.newInstance(Unknown Source)
-	java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
-	java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
-	org.jboss.resteasy.core.ConstructorInjectorImpl.constructOutsideRequest(ConstructorInjectorImpl.java:203)
-	org.jboss.resteasy.core.ConstructorInjectorImpl.construct(ConstructorInjectorImpl.java:188)
-	org.jboss.resteasy.core.providerfactory.Utils.createProviderInstance(Utils.java:97)
-	org.jboss.resteasy.core.providerfactory.ResteasyProviderFactoryImpl.createProviderInstance(ResteasyProviderFactoryImpl.java:1301)
-	org.jboss.resteasy.core.ResteasyDeploymentImpl.createApplication(ResteasyDeploymentImpl.java:396)
-	org.jboss.resteasy.plugins.server.servlet.ServletContainerDispatcher.init(ServletContainerDispatcher.java:108)
-	org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher.init(HttpServletDispatcher.java:39)
-	org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
-	org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
-	org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:663)
-	org.apache.catalina.valves.rewrite.RewriteValve.invoke(RewriteValve.java:543)
-	org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
-	org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
-	org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
-	org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:904)
-	org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
-	org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
-	org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
-	org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
-	org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
-	java.base/java.lang.Thread.run(Thread.java:840)
-Root Cause
-
-org.infinispan.manager.EmbeddedCacheManagerStartupException: ISPN000034: The 'jboss.datagrid-infinispan' JMX domain is already in use.
-	org.infinispan.manager.DefaultCacheManager.internalStart(DefaultCacheManager.java:781)
-	org.infinispan.manager.DefaultCacheManager.start(DefaultCacheManager.java:746)
-	org.infinispan.manager.DefaultCacheManager.<init>(DefaultCacheManager.java:412)
-	org.infinispan.manager.DefaultCacheManager.<init>(DefaultCacheManager.java:246)
-	org.infinispan.manager.DefaultCacheManager.<init>(DefaultCacheManager.java:234)
-	org.keycloak.connections.infinispan.DefaultInfinispanConnectionProviderFactory.initEmbedded(DefaultInfinispanConnectionProviderFactory.java:303)
-	org.keycloak.connections.infinispan.DefaultInfinispanConnectionProviderFactory.lazyInit(DefaultInfinispanConnectionProviderFactory.java:222)
-	org.keycloak.connections.infinispan.DefaultInfinispanConnectionProviderFactory.create(DefaultInfinispanConnectionProviderFactory.java:115)
-	org.keycloak.connections.infinispan.DefaultInfinispanConnectionProviderFactory.create(DefaultInfinispanConnectionProviderFactory.java:96)
-	org.keycloak.services.DefaultKeycloakSession.getOrCreateProvider(DefaultKeycloakSession.java:184)
-	org.keycloak.services.DefaultKeycloakSession.getProvider(DefaultKeycloakSession.java:173)
-	org.keycloak.models.sessions.infinispan.InfinispanSingleUseObjectProviderFactory.getSingleUseObjectCache(InfinispanSingleUseObjectProviderFactory.java:75)
-	org.keycloak.models.sessions.infinispan.InfinispanSingleUseObjectProviderFactory.postInit(InfinispanSingleUseObjectProviderFactory.java:122)
-	org.keycloak.services.DefaultKeycloakSessionFactory.init(DefaultKeycloakSessionFactory.java:128)
-	com.wolterskluwer.auth.keycloak.EmbeddedKeycloakApplication.createSessionFactory(EmbeddedKeycloakApplication.java:91)
-	org.keycloak.services.resources.KeycloakApplication.startup(KeycloakApplication.java:90)
-	com.wolterskluwer.auth.provider.SimplePlatformProvider.onStartup(SimplePlatformProvider.java:27)
-	org.keycloak.services.resources.KeycloakApplication.<init>(KeycloakApplication.java:80)
-	com.wolterskluwer.auth.keycloak.EmbeddedKeycloakApplication.<init>(EmbeddedKeycloakApplication.java:56)
-	jdk.internal.reflect.GeneratedConstructorAccessor588.newInstance(Unknown Source)
-	java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
-	java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
-	org.jboss.resteasy.core.ConstructorInjectorImpl.constructOutsideRequest(ConstructorInjectorImpl.java:203)
-	org.jboss.resteasy.core.ConstructorInjectorImpl.construct(ConstructorInjectorImpl.java:188)
-	org.jboss.resteasy.core.providerfactory.Utils.createProviderInstance(Utils.java:97)
-	org.jboss.resteasy.core.providerfactory.ResteasyProviderFactoryImpl.createProviderInstance(ResteasyProviderFactoryImpl.java:1301)
-	org.jboss.resteasy.core.ResteasyDeploymentImpl.createApplication(ResteasyDeploymentImpl.java:396)
-	org.jboss.resteasy.plugins.server.servlet.ServletContainerDispatcher.init(ServletContainerDispatcher.java:108)
-	org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher.init(HttpServletDispatcher.java:39)
-	org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
-	org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
-	org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:663)
-	org.apache.catalina.valves.rewrite.RewriteValve.invoke(RewriteValve.java:543)
-	org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
-	org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
-	org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
-	org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:904)
-	org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
-	org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
-	org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
-	org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
-	org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
-	java.base/java.lang.Thread.run(Thread.java:840)
-Root Cause
-
-org.infinispan.jmx.JmxDomainConflictException: ISPN000034: The 'jboss.datagrid-infinispan' JMX domain is already in use.
-	org.infinispan.jmx.AbstractJmxRegistration.start(AbstractJmxRegistration.java:91)
-	org.infinispan.jmx.CacheManagerJmxRegistration.start(CacheManagerJmxRegistration.java:17)
-	org.infinispan.manager.DefaultCacheManager.internalStart(DefaultCacheManager.java:777)
-	org.infinispan.manager.DefaultCacheManager.start(DefaultCacheManager.java:746)
-	org.infinispan.manager.DefaultCacheManager.<init>(DefaultCacheManager.java:412)
-	org.infinispan.manager.DefaultCacheManager.<init>(DefaultCacheManager.java:246)
-	org.infinispan.manager.DefaultCacheManager.<init>(DefaultCacheManager.java:234)
-	org.keycloak.connections.infinispan.DefaultInfinispanConnectionProviderFactory.initEmbedded(DefaultInfinispanConnectionProviderFactory.java:303)
-	org.keycloak.connections.infinispan.DefaultInfinispanConnectionProviderFactory.lazyInit(DefaultInfinispanConnectionProviderFactory.java:222)
-	org.keycloak.connections.infinispan.DefaultInfinispanConnectionProviderFactory.create(DefaultInfinispanConnectionProviderFactory.java:115)
-	org.keycloak.connections.infinispan.DefaultInfinispanConnectionProviderFactory.create(DefaultInfinispanConnectionProviderFactory.java:96)
-	org.keycloak.services.DefaultKeycloakSession.getOrCreateProvider(DefaultKeycloakSession.java:184)
-	org.keycloak.services.DefaultKeycloakSession.getProvider(DefaultKeycloakSession.java:173)
-	org.keycloak.models.sessions.infinispan.InfinispanSingleUseObjectProviderFactory.getSingleUseObjectCache(InfinispanSingleUseObjectProviderFactory.java:75)
-	org.keycloak.models.sessions.infinispan.InfinispanSingleUseObjectProviderFactory.postInit(InfinispanSingleUseObjectProviderFactory.java:122)
-	org.keycloak.services.DefaultKeycloakSessionFactory.init(DefaultKeycloakSessionFactory.java:128)
-	com.wolterskluwer.auth.keycloak.EmbeddedKeycloakApplication.createSessionFactory(EmbeddedKeycloakApplication.java:91)
-	org.keycloak.services.resources.KeycloakApplication.startup(KeycloakApplication.java:90)
-	com.wolterskluwer.auth.provider.SimplePlatformProvider.onStartup(SimplePlatformProvider.java:27)
-	org.keycloak.services.resources.KeycloakApplication.<init>(KeycloakApplication.java:80)
-	com.wolterskluwer.auth.keycloak.EmbeddedKeycloakApplication.<init>(EmbeddedKeycloakApplication.java:56)
-	jdk.internal.reflect.GeneratedConstructorAccessor588.newInstance(Unknown Source)
-	java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
-	java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
-	org.jboss.resteasy.core.ConstructorInjectorImpl.constructOutsideRequest(ConstructorInjectorImpl.java:203)
-	org.jboss.resteasy.core.ConstructorInjectorImpl.construct(ConstructorInjectorImpl.java:188)
-	org.jboss.resteasy.core.providerfactory.Utils.createProviderInstance(Utils.java:97)
-	org.jboss.resteasy.core.providerfactory.ResteasyProviderFactoryImpl.createProviderInstance(ResteasyProviderFactoryImpl.java:1301)
-	org.jboss.resteasy.core.ResteasyDeploymentImpl.createApplication(ResteasyDeploymentImpl.java:396)
-	org.jboss.resteasy.plugins.server.servlet.ServletContainerDispatcher.init(ServletContainerDispatcher.java:108)
-	org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher.init(HttpServletDispatcher.java:39)
-	org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
-	org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
-	org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:663)
-	org.apache.catalina.valves.rewrite.RewriteValve.invoke(RewriteValve.java:543)
-	org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
-	org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
-	org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
-	org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:904)
-	org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
-	org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
-	org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
-	org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
-	org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
-	java.base/java.lang.Thread.run(Thread.java:840)
-Root Cause
-
-javax.management.InstanceAlreadyExistsException: jboss.datagrid-infinispan:type=CacheManager,name="DefaultCacheManager",component=CacheManager
-	java.management/com.sun.jmx.mbeanserver.Repository.addMBean(Repository.java:436)
-	java.management/com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.registerWithRepository(DefaultMBeanServerInterceptor.java:1865)
-	java.management/com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.registerDynamicMBean(DefaultMBeanServerInterceptor.java:960)
-	java.management/com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.registerObject(DefaultMBeanServerInterceptor.java:895)
-	java.management/com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.registerMBean(DefaultMBeanServerInterceptor.java:320)
-	java.management/com.sun.jmx.mbeanserver.JmxMBeanServer.registerMBean(JmxMBeanServer.java:523)
-	org.infinispan.jmx.AbstractJmxRegistration.register(AbstractJmxRegistration.java:279)
-	org.infinispan.jmx.AbstractJmxRegistration.start(AbstractJmxRegistration.java:88)
-	org.infinispan.jmx.CacheManagerJmxRegistration.start(CacheManagerJmxRegistration.java:17)
-	org.infinispan.manager.DefaultCacheManager.internalStart(DefaultCacheManager.java:777)
-	org.infinispan.manager.DefaultCacheManager.start(DefaultCacheManager.java:746)
-	org.infinispan.manager.DefaultCacheManager.<init>(DefaultCacheManager.java:412)
-	org.infinispan.manager.DefaultCacheManager.<init>(DefaultCacheManager.java:246)
-	org.infinispan.manager.DefaultCacheManager.<init>(DefaultCacheManager.java:234)
-	org.keycloak.connections.infinispan.DefaultInfinispanConnectionProviderFactory.initEmbedded(DefaultInfinispanConnectionProviderFactory.java:303)
-	org.keycloak.connections.infinispan.DefaultInfinispanConnectionProviderFactory.lazyInit(DefaultInfinispanConnectionProviderFactory.java:222)
-	org.keycloak.connections.infinispan.DefaultInfinispanConnectionProviderFactory.create(DefaultInfinispanConnectionProviderFactory.java:115)
-	org.keycloak.connections.infinispan.DefaultInfinispanConnectionProviderFactory.create(DefaultInfinispanConnectionProviderFactory.java:96)
-	org.keycloak.services.DefaultKeycloakSession.getOrCreateProvider(DefaultKeycloakSession.java:184)
-	org.keycloak.services.DefaultKeycloakSession.getProvider(DefaultKeycloakSession.java:173)
-	org.keycloak.models.sessions.infinispan.InfinispanSingleUseObjectProviderFactory.getSingleUseObjectCache(InfinispanSingleUseObjectProviderFactory.java:75)
-	org.keycloak.models.sessions.infinispan.InfinispanSingleUseObjectProviderFactory.postInit(InfinispanSingleUseObjectProviderFactory.java:122)
-	org.keycloak.services.DefaultKeycloakSessionFactory.init(DefaultKeycloakSessionFactory.java:128)
-	com.wolterskluwer.auth.keycloak.EmbeddedKeycloakApplication.createSessionFactory(EmbeddedKeycloakApplication.java:91)
-	org.keycloak.services.resources.KeycloakApplication.startup(KeycloakApplication.java:90)
-	com.wolterskluwer.auth.provider.SimplePlatformProvider.onStartup(SimplePlatformProvider.java:27)
-	org.keycloak.services.resources.KeycloakApplication.<init>(KeycloakApplication.java:80)
-	com.wolterskluwer.auth.keycloak.EmbeddedKeycloakApplication.<init>(EmbeddedKeycloakApplication.java:56)
-	jdk.internal.reflect.GeneratedConstructorAccessor588.newInstance(Unknown Source)
-	java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
-	java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
-	org.jboss.resteasy.core.ConstructorInjectorImpl.constructOutsideRequest(ConstructorInjectorImpl.java:203)
-	org.jboss.resteasy.core.ConstructorInjectorImpl.construct(ConstructorInjectorImpl.java:188)
-	org.jboss.resteasy.core.providerfactory.Utils.createProviderInstance(Utils.java:97)
-	org.jboss.resteasy.core.providerfactory.ResteasyProviderFactoryImpl.createProviderInstance(ResteasyProviderFactoryImpl.java:1301)
-	org.jboss.resteasy.core.ResteasyDeploymentImpl.createApplication(ResteasyDeploymentImpl.java:396)
-	org.jboss.resteasy.plugins.server.servlet.ServletContainerDispatcher.init(ServletContainerDispatcher.java:108)
-	org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher.init(HttpServletDispatcher.java:39)
-	org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
-	org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
-	org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:663)
-	org.apache.catalina.valves.rewrite.RewriteValve.invoke(RewriteValve.java:543)
-	org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
-	org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
-	org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
-	org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:904)
-	org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
-	org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
-	org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
-	org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
-	org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
-	java.base/java.lang.Thread.run(Thread.java:840)
+Would you like me to summarize this for the team in a more structured format, like a document or meeting notes?
