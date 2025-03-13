@@ -1,30 +1,58 @@
-It sounds like the plan is shifting a bit, with the immediate focus on finalizing the current production deployment while preparing for the transition to the new app code. Here are the key takeaways from this discussion:
-	1.	Prod Deployment Status:
-	•	The application is deployed in Prod and is currently being tested.
-	•	The load balancer setup is pending.
-	•	DR setup needs to be reviewed.
-	•	Once validated, the app team will take ownership.
-	2.	Next Steps for the New App Code:
-	•	A new app code has been created, but various dependencies need to be requested, including:
-	•	Veracode and SonarQube projects
-	•	Artifact repositories
-	•	AD groups
-	•	Pipeline setup
-	•	Deployment will start in Dev first, then progress to Cert and Prod.
-	•	Security and architecture reviews are pending and must be completed.
-	3.	Cert Environment Issues:
-	•	Backend memory issues need to be resolved.
-	•	Some challenges with Azure cert and prod environments are being investigated.
-	4.	Tracking and Coordination:
-	•	Once the app team provides detailed requirements, work items will be created.
-	•	Efforts for switching to the new app code will be estimated and planned accordingly.
-	•	Satish has handed off the completed Prod setup to the app team.
+1. EGRC Data Classification Update
+	•	Current classification: Data Class 2 (Internal)
+	•	New classification: Data Class 4 (Private)
+	•	Justification: Contains access control lists that reveal who has access to what, making it sensitive.
+	•	Potential security risk: Could be targeted by adversaries to exploit privileged access.
+	•	Impact: No major changes needed for the project itself, but security posture will be improved.
+	•	Update expected by EOD.
 
-Immediate Actions:
-	•	Cert Backend Fixes: Investigate and resolve memory issues.
-	•	Load Balancer Setup: Confirm and complete for prod.
-	•	New App Code Prep: Gather and request necessary components.
-	•	Security & Architecture Reviews: Initiate formal reviews.
-	•	Tracking Work Items: Create stories for completed prod work.
+2. Security & Compliance Standards (From Data Classification & Handling Standard)
+	•	Electronic Storage:
+	•	Encryption at rest required for Data Class 4.
+	•	SQL Server 2019 already inherits AES-256 encryption → No changes needed.
+	•	Electronic Transport:
+	•	All transmissions must be encrypted.
+	•	SFTP (TLS-encrypted) will be used for secure data transfers.
+	•	PGP encryption for additional security is optional but recommended.
+	•	Physical Storage & Transport:
+	•	Data must be securely stored (e.g., locked cabinets).
+	•	If physically transported, approved couriers must be used.
+	•	Disposal & Media Handling:
+	•	Secure Shred-it bins required for disposal.
+	•	No write access permitted to portable media.
 
-Would you like me to summarize this for the team in a more structured format, like a document or meeting notes?
+3. File Transmission & Storage Considerations
+	•	Source-side (LS1) file generation is already set up.
+	•	Focus is on how the target location receives & processes files.
+	•	Transmission Methods Considered:
+	1.	SFTP Gateway (Preferred option)
+	•	No installation required.
+	•	Uses existing secure FTP processes.
+	2.	SMB Shared Drive (Needs confirmation)
+	•	Requires checking with storage/data protection team.
+	3.	Agent-Based Transfer (Ruled out)
+	•	Not an option due to installation constraints.
+	•	SSIS will be used for file loading into the target database.
+	•	Transmission team will handle movement to the correct target location.
+
+4. Resiliency & Tiering Considerations
+	•	Recovery Point Objective (RPO) & availability requirements will influence the final implementation.
+	•	System team will adjust based on the provided requirements.
+
+⸻
+
+Next Steps:
+	•	Update EGRC Data Classification to Class 4 (Target: EOD).
+	•	Meet with Transmission Team later today to finalize file movement specifics.
+	•	Confirm feasibility of SMB shared drive with storage/data protection team.
+	•	Schedule Stakeholder Review (Target: Next week).
+	•	Ensure target file handling process mirrors the source setup (SSIS placement & loading).
+	•	Monitor evolving Zero Trust security updates for future enhancements.
+
+⸻
+
+Final Notes:
+	•	Encryption at rest is already in place (AES-256 for SQL Server).
+	•	All transmissions will be encrypted (SFTP/TLS).
+	•	No mounting of file shares on database servers (per policy).
+	•	Data handling requirements align with the company’s security standards.
